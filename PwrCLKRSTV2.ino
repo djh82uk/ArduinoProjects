@@ -117,21 +117,21 @@ void printCenteredFreq(float freq) {
 
 
 void drawButtonLabels() {
-  const char* labels[] = { "+", "-", "step", "set" };
-  int blockHeight = tft.height() / 4;
   tft.setTextSize(1);
   tft.setTextColor(WHITE, BLACK);
 
-  for (int i = 0; i < 4; i++) {
-    int16_t x1, y1;
-    uint16_t w, h;
-    tft.getTextBounds(labels[i], 0, 0, &x1, &y1, &w, &h);
-    int x = tft.width() - w - 4;
-    int y = i * blockHeight + (blockHeight - h) / 2;
-    tft.fillRect(x - 2, y - 2, w + 4, h + 4, BLACK);
-    tft.setCursor(x, y);
-    tft.print(labels[i]);
-  }
+  // Right-aligned labels near edge
+  tft.setCursor(120, 4);    // Top button (+)
+  tft.print("+");
+
+  tft.setCursor(120, 37);   // Second button (–)
+  tft.print("-");
+
+  tft.setCursor(103, 95);    // Third button (step)
+  tft.print("step");
+
+  tft.setCursor(107, 120);   // Bottom button (set)
+  tft.print("set");
 }
 
 
@@ -165,8 +165,7 @@ void drawSetFreqScreen() {
   if (step >= 1000000) stepStr = String(step / 1000000.0, 1) + "MHz";
   else if (step >= 1000) stepStr = String(step / 1000.0, 1) + "KHz";
   else stepStr = String(step, 1) + "Hz";
-
-  printCenteredText("Step: " + stepStr, 60, BLACK, YELLOW, 1);
+  printCenteredText("Step: " + stepStr, 60, MAGENTA, WHITE, 1);
   drawButtonLabels();
 }
 
